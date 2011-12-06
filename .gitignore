@@ -1,2 +1,4 @@
-﻿Debug/*
-Release/*
+#ignore files
+Debug/
+Release/
+*.user

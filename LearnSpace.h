@@ -3,12 +3,15 @@
 class CLearnSpace
 {
 public:
+	char m_Name[256];
 	int m_Length;
 	float *m_Data;
 
 public:
 	CLearnSpace(int length);
 	~CLearnSpace(void);
+
+	char *GetName(){ return m_Name; }
 
 	void Clear( float v=0.0f );
 	void Copy( float *data );

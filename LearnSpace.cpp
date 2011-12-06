@@ -3,6 +3,7 @@
 
 CLearnSpace::CLearnSpace(int length)
 {
+	m_Name[0] = 0;
 	m_Length = length;
 	m_Data = new float[m_Length];
 }
@@ -15,7 +16,7 @@ CLearnSpace::~CLearnSpace(void)
 void CLearnSpace::Clear( float v )
 {
 	float *pEnd = m_Data + m_Length;
-	*pEnd = 1.0f;
+	m_Data[0] = 1.0f;
 	for( float *p=m_Data+1; p<pEnd; p++ ) *p = v;
 }
 
@@ -49,17 +50,17 @@ bool CLearnSpace::LoadImage_1Line1Element( FILE *fin, int colkey, int colval )
 	return false;
 }
 
-bool CLearnSpace::LoadImage_1LineElements( FILE *fin, int colval /*, int time*/ )
+bool CLearnSpace::LoadImage_1LineElements( FILE *fin, int colval )
 {
 	char line[1024];
 	char *arr[256];
 	if( fgets( line, 1024, fin ) == NULL ) return false;
 	if( CCharUtil::SplitComma( line, arr, 256 ) < colval+1 ) return true;
 
-	///// first
 	Clear( 0.0f );
-	///// name, index
+
 	///// values
+	strncpy( m_Name, arr[0], 256 );
 	for( int i=colval; arr[i] != 0; i++ )
 	{
 		int key = atoi(arr[i]);
