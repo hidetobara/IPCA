@@ -215,6 +215,8 @@ void CIncrementalPca::SaveBinMainSub( char* dir )
 	fwrite( m_ArrImgMain, sizeof(float), sizeArr, f );
 	fclose( f );
 
+	printf( "INFO: size=%d, [%f,%f,%f,%f,...]", sizeof(float), m_ArrImgMain[0], m_ArrImgMain[1], m_ArrImgMain[2], m_ArrImgMain[3] );
+
 	sprintf( path, "%sipcaSub.bin", dir );
 	f = fopen( path, "wb" );
 	fwrite( m_ArrImgSub, sizeof(float), sizeArr, f );

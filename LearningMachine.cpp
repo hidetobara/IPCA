@@ -34,19 +34,21 @@ void CLearningMachine::SetupTimer()
 	m_Count = 0;
 	m_ClockPrevious = 0;
 }
-void CLearningMachine::TickTimer( int border )
+bool CLearningMachine::TickTimer( int border )
 {
+	m_Count++;
 	if( m_Count > 0 && m_Count % border == 0 )
 	{
 		long clockNow = clock();
 		float sec = (float)( clockNow - m_ClockPrevious ) / (float)CLOCKS_PER_SEC;
 		printf( "\t%d frames : %2.2f fps\n", m_Count, (float)border/sec );
 		m_ClockPrevious = clockNow;
+		return true;
 	}
-	m_Count++;
+	return false;
 }
 
-bool CLearningMachine::Learn( char *pathInput )
+bool CLearningMachine::Learn( const char *pathInput )
 {
 	FILE *fin;
 	CLearnSpace *spaceFilter = SetupFilter();
@@ -61,7 +63,12 @@ bool CLearningMachine::Learn( char *pathInput )
 	{
 		if( spaceFilter != NULL ) m_Ipca->ArrMul( spaceInput->m_Data, spaceFilter->m_Data, spaceInput->m_Data );
 		m_Ipca->Learn( spaceInput->m_Data );
+
+#if _DEBUG
+		if( TickTimer() ) break;
+#else
 		TickTimer();
+#endif
 	}
 	fclose( fin );
 
@@ -72,7 +79,7 @@ bool CLearningMachine::Learn( char *pathInput )
 	return true;
 }
 
-bool CLearningMachine::Cluster( char *pathInput, char *pathCluster )
+bool CLearningMachine::Cluster( const char *pathInput, const char *pathCluster )
 {
 	FILE *fin, *fout;
 	CLearnSpace *spaceFilter = SetupFilter();
@@ -106,7 +113,7 @@ bool CLearningMachine::Cluster( char *pathInput, char *pathCluster )
 	return true;
 }
 
-bool CLearningMachine::Evaluate( char *pathInput, int target, char *pathEvaluate )
+bool CLearningMachine::Evaluate( const char *pathInput, int target, const char *pathEvaluate )
 {
 	FILE *fin, *fout;
 	CLearnSpace *spaceFilter = SetupFilter();

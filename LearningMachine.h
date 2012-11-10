@@ -14,16 +14,16 @@ private:
 
 	CLearnSpace* SetupFilter();
 	void SetupTimer();
-	void TickTimer( int border=1000 );
+	bool TickTimer( int border=1000 );
 
 public:
 	CLearningMachine(void);
 	~CLearningMachine(void);
 
-	void SetBaseDir( char *dir ){ strncpy( m_DirBase, dir, 256 ); }
-	void SetFilter( char *pathFilter ){ strncpy( m_PathFilter, pathFilter, 256 ); }
+	void SetBaseDir( const char *dir ){ strncpy( m_DirBase, dir, 256 ); }
+	void SetFilter( const char *pathFilter ){ strncpy( m_PathFilter, pathFilter, 256 ); }
 
-	bool Learn( char *pathInput );
-	bool Cluster( char *pathInput, char *pathCluster );
-	bool Evaluate( char *pathInput, int target, char *pathEvaluate );
+	bool Learn( const char *pathInput );
+	bool Cluster( const char *pathInput, const char *pathCluster );
+	bool Evaluate( const char *pathInput, int target, const char *pathEvaluate );
 };

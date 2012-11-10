@@ -21,3 +21,6 @@
 #include "LearnSpace.h"
 #include "IncrementalPca.h"
 #include "LearningMachine.h"
+
+#include <string>
+
